@@ -10,6 +10,8 @@
 
 U8G2_SSD1306_128X32_UNIVISION_1_HW_I2C u8g2(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
 
+#define SENSORPIN A6
+
 // raw sensor value
 float rawValue = 0.0;
 
@@ -36,13 +38,13 @@ void setup()
 {
   u8g2.begin();
   // initial reading for getting the startup smoothness out
-  smoothedValue = analogRead(A1);
+  smoothedValue = analogRead(SENSORPIN);
 }
 
 void loop()
 {
   // read the value
-  rawValue = analogRead(A1);
+  rawValue = analogRead(SENSORPIN);
   smoothedValue += (rawValue - smoothedValue) * smoothFilter;
   mappedValue = map(smoothedValue, minValue, maxValue, minMapped, maxMapped);
 
